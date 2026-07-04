@@ -36,7 +36,7 @@ spec:
               tag: 4.0.18.2978
               pullPolicy: IfNotPresent
             env:
-              TZ: "${TZ}"
+              TZ: "America/New_York"
               SONARR__INSTANCE_NAME: *app
               SONARR__AUTH__METHOD: External
               SONARR__AUTH__REQUIRED: DisabledForLocalAddresses

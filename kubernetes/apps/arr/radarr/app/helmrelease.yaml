@@ -35,7 +35,7 @@ spec:
               tag: 6.2.1.10461
               pullPolicy: IfNotPresent
             env:
-              TZ: "${TZ}"
+              TZ: "America/New_York"
               RADARR__INSTANCE_NAME: *app
               RADARR__PORT: &port 7878
               RADARR__AUTH__METHOD: External

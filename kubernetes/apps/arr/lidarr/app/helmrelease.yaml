@@ -35,7 +35,7 @@ spec:
               tag: 3.1.3.4968
               pullPolicy: IfNotPresent
             env:
-              TZ: "${TZ}"
+              TZ: "America/New_York"
               LIDARR__INSTANCE_NAME: *app
               LIDARR__PORT: &port 8686
               LIDARR__APPLICATION_URL: "https://lidarr.${PUBLIC_DOMAIN}"

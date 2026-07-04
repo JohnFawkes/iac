@@ -35,7 +35,7 @@ spec:
               tag: v3.3.0
               pullPolicy: IfNotPresent
             env:
-              TZ: "${TZ}"
+              TZ: "America/New_York"
               LOG_LEVEL: info
               DB_TYPE: postgres
               DB_HOST: "pg-cluster-primary.databases.svc.cluster.local"

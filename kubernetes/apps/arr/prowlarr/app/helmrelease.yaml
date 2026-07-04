@@ -35,7 +35,7 @@ spec:
               tag: 2.5.0.5422
               pullPolicy: IfNotPresent
             env:
-              TZ: "${TZ}"
+              TZ: "America/New_York"
               PROWLARR__INSTANCE_NAME: *app
               PROWLARR__PORT: &port 9696
               PROWLARR__APPLICATION_URL: "https://prowlarr.${PUBLIC_DOMAIN}"

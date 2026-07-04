@@ -39,7 +39,7 @@ spec:
               tag: 5.0.4
               pullPolicy: IfNotPresent
             env:
-              TZ: "${TZ}"
+              TZ: "America/New_York"
               SABNZBD__PORT: &port 8080
               SABNZBD__HOST_WHITELIST_ENTRIES: >-
                 {{ .Release.Name }},

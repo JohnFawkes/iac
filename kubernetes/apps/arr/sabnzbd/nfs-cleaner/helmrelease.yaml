@@ -42,7 +42,7 @@ spec:
             command: ["/bin/sh"]
             args: ["/scripts/cleanup.sh"]
             env:
-              TZ: ${TZ}
+              TZ: America/New_York
             securityContext:
               allowPrivilegeEscalation: false
               capabilities:

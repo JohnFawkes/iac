@@ -28,7 +28,7 @@ spec:
               tag: 0.27.1
               pullPolicy: IfNotPresent
             env:
-              TZ: "${TZ}"
+              TZ: "America/New_York"
               DISPATCHARR_ENV: "aio"
               REDIS_HOST: localhost
               CELERY_BROKER_URL: redis://localhost:6379/0
