@@ -64,7 +64,7 @@ metrics:
     title: Proxmox
 
   - name: speedtest_download
-    query: round(max(speedtest_download_bits_per_second) / 1000000, 0.1)
+    query: round(max(last_over_time(speedtest_download_bits_per_second[24h])) / 1000000, 0.1)
     title: Download
     suffix: " Mbps"
     colors:
@@ -73,7 +73,7 @@ metrics:
       - { color: "red", min: 0, max: 99 }
 
   - name: speedtest_upload
-    query: round(max(speedtest_upload_bits_per_second) / 1000000, 0.1)
+    query: round(max(last_over_time(speedtest_upload_bits_per_second[24h])) / 1000000, 0.1)
     title: Upload
     suffix: " Mbps"
     colors:
