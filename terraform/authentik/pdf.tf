@@ -1,5 +1,5 @@
 resource "authentik_provider_proxy" "pdf" {
-  name                         = "Stirling PDF"
+  name                         = "Bento PDF"
   access_token_validity        = "hours=24"
   authorization_flow           = data.authentik_flow.default-authorization-flow.id
   external_host                = "https://pdf.${var.domains["dev"]}"
@@ -14,16 +14,8 @@ resource "authentik_provider_proxy" "pdf" {
   ]
 }
 
-resource "authentik_application" "pdf" {
-  name              = "Stirling PDF"
-  slug              = "stirling-pdf"
-  meta_icon         = "https://github.com/Mafyuh/homelab-svg-assets/raw/refs/heads/main/assets/stirlingpdf.svg"
-  protocol_provider = authentik_provider_proxy.pdf.id
-  meta_launch_url       = "https://pdf.mafyuh.dev"
-}
-
 resource "authentik_policy_binding" "pdf-access" {
-  target = authentik_application.pdf.uuid
+  target = "7103aad0-f680-49d3-80a2-60950ec93a34"
   group  = authentik_group.jellyfin-ldap.id
   order  = 0
 }

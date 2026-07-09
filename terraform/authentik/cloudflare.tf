@@ -16,8 +16,9 @@ resource "authentik_provider_oauth2" "cloudflare" {
 
   allowed_redirect_uris = [
     {
-      matching_mode = "strict"
-      url           = "https://mafyuh.cloudflareaccess.com/cdn-cgi/access/callback"
+      matching_mode     = "strict"
+      redirect_uri_type = "authorization"
+      url               = "https://mafyuh.cloudflareaccess.com/cdn-cgi/access/callback"
     }
   ]
 }

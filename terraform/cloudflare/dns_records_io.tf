@@ -16,37 +16,10 @@ resource "cloudflare_dns_record" "io_jelly" {
   zone_id = data.bitwarden-secrets_secret.cf_io_zone_id.value
 }
 
-resource "cloudflare_dns_record" "io_kuma" {
-  content = data.bitwarden-secrets_secret.arm_oci_vm_ip.value
-  name    = "kuma.${var.domains["io"]}"
-  proxied = false
-  ttl     = 1
-  type    = "A"
-  zone_id = data.bitwarden-secrets_secret.cf_io_zone_id.value
-}
-
-resource "cloudflare_dns_record" "io_links" {
-  content = data.bitwarden-secrets_secret.arm_oci_vm_ip.value
-  name    = "links.${var.domains["io"]}"
-  proxied = true
-  ttl     = 1
-  type    = "A"
-  zone_id = data.bitwarden-secrets_secret.cf_io_zone_id.value
-}
-
 resource "cloudflare_dns_record" "io_local_wildcard" {
   content = "10.69.69.200"
   name    = "*.local.${var.domains["io"]}"
   proxied = false
-  ttl     = 1
-  type    = "A"
-  zone_id = data.bitwarden-secrets_secret.cf_io_zone_id.value
-}
-
-resource "cloudflare_dns_record" "io_request" {
-  content = data.bitwarden-secrets_secret.arm_oci_vm_ip.value
-  name    = "request.${var.domains["io"]}"
-  proxied = true
   ttl     = 1
   type    = "A"
   zone_id = data.bitwarden-secrets_secret.cf_io_zone_id.value
@@ -82,15 +55,6 @@ resource "cloudflare_dns_record" "io_kasm" {
 resource "cloudflare_dns_record" "io_wildcard" {
   content = "c68b2785-4489-4a5b-a265-4cb72d2e2625.cfargotunnel.com"
   name    = "*.${var.domains["io"]}"
-  proxied = true
-  ttl     = 1
-  type    = "CNAME"
-  zone_id = data.bitwarden-secrets_secret.cf_io_zone_id.value
-}
-
-resource "cloudflare_dns_record" "io_mafyuh_io" {
-  content = "c68b2785-4489-4a5b-a265-4cb72d2e2625.cfargotunnel.com"
-  name    = var.domains["io"]
   proxied = true
   ttl     = 1
   type    = "CNAME"

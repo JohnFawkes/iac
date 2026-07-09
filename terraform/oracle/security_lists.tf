@@ -82,8 +82,8 @@ resource "oci_core_default_security_list" "Default-Security-List-for-NEW" {
     source_type = "CIDR_BLOCK"
     stateless   = "false"
     tcp_options {
-      max = "2424"
-      min = "2424"
+      max = "22"
+      min = "22"
     }
   }
   manage_default_resource_id = oci_core_vcn.NEW.default_security_list_id

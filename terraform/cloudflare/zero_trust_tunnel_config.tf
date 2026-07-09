@@ -11,6 +11,16 @@ resource "cloudflare_zero_trust_tunnel_cloudflared_config" "main_tunnel" {
   config = {
     ingress = [
       {
+        hostname = "chat.${var.domains["io"]}"
+        service  = "http://10.20.10.55:3000"
+        origin_request = {
+          no_tls_verify      = true
+          origin_server_name = "external.mafyuh.net"
+          http2_origin       = true
+          access             = null
+        }
+      },
+      {
         hostname = "ai.${var.domains["io"]}"
         service  = "http://10.20.10.55:3000"
         path     = ""
@@ -112,7 +122,7 @@ resource "cloudflare_zero_trust_tunnel_cloudflared_config" "main_tunnel" {
       },
       {
         hostname = "bot.${var.domains["dev"]}"
-        service  = "http://10.69.69.169:29316"
+        service  = "http://10.20.10.38:8080"
         path     = ""
         origin_request = {
           no_tls_verify            = false
@@ -233,6 +243,12 @@ resource "cloudflare_zero_trust_tunnel_cloudflared_config" "main_tunnel" {
             team_name = "mafyuh"
             required  = false
           }
+        }
+      },
+      {
+        hostname = var.domains["io"]
+        service  = "http://10.20.10.38:8080"
+        origin_request = {
         }
       },
       {

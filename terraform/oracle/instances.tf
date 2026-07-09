@@ -54,15 +54,15 @@ resource "oci_core_instance" "arm" {
   shape = "VM.Standard.A1.Flex"
   shape_config {
     baseline_ocpu_utilization = ""
-    memory_in_gbs             = "24"
+    memory_in_gbs             = "12"
     nvmes                     = "0"
-    ocpus                     = "4"
-    vcpus                     = "4"
+    ocpus                     = "2"
+    vcpus                     = "2"
   }
   source_details {
-    boot_volume_size_in_gbs = "149"
+    boot_volume_size_in_gbs = "100"
     boot_volume_vpus_per_gb = "10"
-    source_id               = "ocid1.image.oc1.iad.aaaaaaaagbgiy3w3psyvqarm5lcyjyort7ufmcx7qisizxsae3rdm6k75odq"
+    source_id               = "ocid1.image.oc1.iad.aaaaaaaai7jydfj624afgrkqvvykdvvdvskdo6upkhys56nyskim3mr526va"
     source_type             = "image"
   }
   state = "RUNNING"

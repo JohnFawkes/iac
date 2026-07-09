@@ -6,7 +6,7 @@ resource "authentik_property_mapping_provider_scope" "email" {
   expression  = <<EOF
 return {
     "email": request.user.email,
-    "email_verified": True
+    "email_verified": False
 }
 EOF
 }
@@ -15,6 +15,8 @@ resource "authentik_property_mapping_provider_scope" "openid" {
   name       = "authentik default OAuth Mapping: OpenID 'openid'"
   scope_name = "openid"
   expression = <<EOF
+# This scope is required by the OpenID-spec, and must as such exist in authentik.
+# The scope by itself does not grant any information
 return {}
 EOF
 }
@@ -32,15 +34,18 @@ return {
     "given_name": request.user.name,
     "preferred_username": request.user.username,
     "nickname": request.user.username,
-    "groups": [group.name for group in request.user.ak_groups.all()],
+    "groups": [group.name for group in request.user.groups.all()],
 }
 EOF
 }
 
 resource "authentik_property_mapping_provider_scope" "offline_access" {
-  name       = "authentik default OAuth Mapping: OpenID 'offline_access'"
-  scope_name = "offline_access"
-  expression = <<EOF
+  name        = "authentik default OAuth Mapping: OpenID 'offline_access'"
+  scope_name  = "offline_access"
+  description = "Access to request new tokens without interaction"
+  expression  = <<EOF
+# This scope grants the application a refresh token that can be used to refresh user data
+# and let the application access authentik without the users interaction
 return {}
 EOF
 }
@@ -71,7 +76,7 @@ resource "authentik_property_mapping_provider_saml" "email" {
 resource "authentik_property_mapping_provider_saml" "groups" {
   name       = "authentik default SAML Mapping: Groups"
   saml_name  = "http://schemas.xmlsoap.org/claims/Group"
-  expression = "for group in request.user.ak_groups.all():\n    yield group.name"
+  expression = "for group in request.user.groups.all():\n    yield group.name"
 }
 
 resource "authentik_property_mapping_provider_saml" "name" {

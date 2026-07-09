@@ -16,8 +16,9 @@ resource "authentik_provider_oauth2" "oracle" {
 
   allowed_redirect_uris = [
     {
-      matching_mode = "strict"
-      url           = "https://idcs-238d6750669d414dbf8796abb1799eef.identity.oraclecloud.com/oauth2/v1/social/callback"
+      matching_mode     = "strict"
+      redirect_uri_type = "authorization"
+      url               = "https://idcs-238d6750669d414dbf8796abb1799eef.identity.oraclecloud.com/oauth2/v1/social/callback"
     }
   ]
 }

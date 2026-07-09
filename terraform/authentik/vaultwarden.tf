@@ -17,8 +17,9 @@ resource "authentik_provider_oauth2" "vaultwarden" {
 
   allowed_redirect_uris = [
     {
-      matching_mode = "strict"
-      url           = "https://vault.${var.domains["dev"]}/identity/connect/oidc-signin"
+      matching_mode     = "strict"
+      redirect_uri_type = "authorization"
+      url               = "https://vault.${var.domains["dev"]}/identity/connect/oidc-signin"
     }
   ]
 }

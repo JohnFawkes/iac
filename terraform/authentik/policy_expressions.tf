@@ -6,14 +6,9 @@ resource "authentik_policy_expression" "default-authentication-flow-password-sta
   expression = "flow_plan = request.context.get(\"flow_plan\")\nif not flow_plan:\n    return True\n# If the user does not have a backend attached to it, they haven't\n# been authenticated yet and we need the password stage\nreturn not hasattr(flow_plan.context.get(\"pending_user\"), \"backend\")"
 }
 
-resource "authentik_policy_expression" "default-oobe-flow-set-authentication" {
-  name       = "default-oobe-flow-set-authentication"
-  expression = "# This policy ensures that the setup flow can only be\n# used one time\nfrom authentik.flows.models import Flow, FlowAuthenticationRequirement\nFlow.objects.filter(slug=\"initial-setup\").update(\n    authentication=FlowAuthenticationRequirement.REQUIRE_SUPERUSER,\n)\nreturn True"
-}
-
 resource "authentik_policy_expression" "default-oobe-password-usable" {
   name       = "default-oobe-password-usable"
-  expression = "# This policy ensures that the setup flow can only be\n# executed when the admin user doesn''t have a password set\nakadmin = ak_user_by(username=\"akadmin\")\nreturn not akadmin.has_usable_password()"
+  expression = "# This policy ensures that the setup flow can only be\n# executed when the admin user doesn't have a password set\nakadmin = ak_user_by(username=\"akadmin\")\n# Ensure flow was started correctly\nstarted_by = context.get(\"goauthentik.io/core/setup/started-by\")\nif started_by != \"setup\":\n    setup_url = request.http_request.build_absolute_uri(\"/\")\n    ak_message(f\"Access the authentik setup by navigating to {setup_url}\")\n    return False\nreturn akadmin is None or not akadmin.has_usable_password()"
 }
 
 resource "authentik_policy_expression" "default-oobe-prefill-user" {
