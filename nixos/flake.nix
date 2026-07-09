@@ -1,0 +1,75 @@
+{
+  inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nix-inspect.url = "github:bluskript/nix-inspect";
+    nixos-wsl.url = "github:nix-community/NixOS-WSL";
+    deploy-rs.url = "github:serokell/deploy-rs";
+    vscode-server.url = "github:nix-community/nixos-vscode-server";
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    comin = {
+      url = "github:nlewo/comin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    home-manager = {
+      url = "github:nix-community/home-manager/release-26.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    ip-whitelist = {
+      url = "github:Mafyuh/nixos-ip-whitelist-firewall";
+    };
+  };
+
+  outputs =
+    { self, nixpkgs, ... }@inputs:
+    let
+      systems = [ "x86_64-linux" "aarch64-linux" ];
+      forAllSystems = f: nixpkgs.lib.genAttrs systems (system: f nixpkgs.legacyPackages.${system});
+      nixosConfig = { modules ? [] }: nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = {
+          inherit inputs;
+          pkgs-unstable = import inputs.nixpkgs-unstable {
+            system = "x86_64-linux";
+            config.allowUnfree = true;
+          };
+        };
+        modules = [ ./common/default.nix inputs.sops-nix.nixosModules.sops ] ++ modules;
+      };
+      wslConfig = { modules ? [] }: nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = { inherit inputs; };
+        modules = [ ./common/nix.nix ./common/packages.nix ./common/users.nix inputs.home-manager.nixosModules.home-manager ] ++ modules;
+      };
+    in {
+    nixosConfigurations = {
+        template = nixosConfig { modules = [ inputs.comin.nixosModules.comin inputs.disko.nixosModules.disko inputs.home-manager.nixosModules.home-manager ./hosts/template/disk-config.nix ./hosts/template/default.nix ]; };
+        laptop = nixosConfig { modules = [ inputs.comin.nixosModules.comin inputs.disko.nixosModules.disko inputs.home-manager.nixosModules.home-manager ./hosts/laptop/disk-config.nix ./hosts/laptop/default.nix ]; };
+        racknerd-vps = nixosConfig { modules = [ inputs.comin.nixosModules.comin inputs.disko.nixosModules.disko inputs.home-manager.nixosModules.home-manager inputs.ip-whitelist.nixosModules.default ./hosts/racknerd-vps/disk-config.nix ./hosts/racknerd-vps/default.nix ]; };
+        wsl = wslConfig { modules = [ inputs.comin.nixosModules.comin ./hosts/wsl/default.nix ]; };
+      };
+    devShells = forAllSystems (pkgs: {
+        default = pkgs.mkShell {
+          packages = [
+            pkgs.nix-inspect
+            pkgs.deploy-rs
+            pkgs.nvd
+            pkgs.nix-output-monitor
+            pkgs.sops
+            pkgs.age
+            pkgs.ssh-to-age
+          ];
+          shellHook = ''
+            echo "Nix Development Environment"
+          '';
+        };
+      });
+  } // import ./deploy.nix { inherit self inputs; };
+}

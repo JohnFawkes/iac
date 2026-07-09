@@ -12,6 +12,12 @@
   "registryAliases": {
     "mirror.gcr.io": "docker.io"
   },
+  "nix": {
+    "enabled": true
+  },
+  "lockFileMaintenance": {
+    "enabled": true
+  },
   "flux": {
     "managerFilePatterns": ["/^kubernetes/.+\\.ya?ml$/"]
   },
