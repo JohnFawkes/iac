@@ -21,3 +21,6 @@ area/ansible:
 area/packer:
   - changed-files:
       - any-glob-to-any-file: "packer/**/*"
+area/nixos:
+  - changed-files:
+      - any-glob-to-any-file: "nixos/**/*"
