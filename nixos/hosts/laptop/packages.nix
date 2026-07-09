@@ -31,6 +31,7 @@
     fluxcd
     wireguard-tools
     pkgs-unstable.claude-code
+    pkgs-unstable.discord
     pkgs-unstable.codex
     pkgs-unstable.termius
     pkgs-unstable.k9s
