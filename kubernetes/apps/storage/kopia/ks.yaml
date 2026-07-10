@@ -12,7 +12,7 @@ spec:
       app.kubernetes.io/name: *app
   interval: 30m
   timeout: 5m
-  path: ./kubernetes/apps/kopia/app
+  path: ./kubernetes/apps/storage/kopia/app
   prune: true
   sourceRef:
     kind: GitRepository

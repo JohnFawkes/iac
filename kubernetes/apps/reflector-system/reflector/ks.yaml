@@ -12,7 +12,7 @@ spec:
       app.kubernetes.io/name: *app
   interval: 30m
   timeout: 5m
-  path: ./kubernetes/apps/reflector/app
+  path: ./kubernetes/apps/reflector-system/reflector/app
   prune: true
   sourceRef:
     kind: GitRepository

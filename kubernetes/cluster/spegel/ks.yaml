@@ -3,8 +3,8 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app volsync
-  namespace: &ns storage
+  name: &app spegel
+  namespace: &ns kube-system
 spec:
   targetNamespace: *ns
   commonMetadata:
@@ -12,7 +12,7 @@ spec:
       app.kubernetes.io/name: *app
   interval: 30m
   timeout: 5m
-  path: ./kubernetes/apps/volsync/app
+  path: ./kubernetes/cluster/spegel/app
   prune: true
   sourceRef:
     kind: GitRepository

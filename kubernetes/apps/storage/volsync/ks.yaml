@@ -3,8 +3,8 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app reloader
-  namespace: &ns kube-system
+  name: &app volsync
+  namespace: &ns storage
 spec:
   targetNamespace: *ns
   commonMetadata:
@@ -12,9 +12,10 @@ spec:
       app.kubernetes.io/name: *app
   interval: 30m
   timeout: 5m
-  path: ./kubernetes/apps/reloader/app
+  path: ./kubernetes/apps/storage/volsync/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: iac
     namespace: flux-system
+  wait: false
