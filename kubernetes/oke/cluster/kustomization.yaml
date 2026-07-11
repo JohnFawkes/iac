@@ -1,0 +1,17 @@
+---
+# yaml-language-server: $schema=https://www.schemastore.org/kustomization.json
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../../flux/namespaces/certman.yaml
+  - ../../../flux/namespaces/monitoring.yaml
+  - ../../../flux/namespaces/networking.yaml
+  - ../../../flux/namespaces/security.yaml
+  - cert-manager/ks.yaml
+  - cloudflare-dns/ks.yaml
+  - envoy-gateway/ks.yaml
+  - external-secrets/ks.yaml
+  - flux-operator/ks.yaml
+  - flux-instance/ks.yaml
+  - gateway-api/ks.yaml
+  - metrics-server/ks.yaml

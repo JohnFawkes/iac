@@ -1,0 +1,6 @@
+---
+# yaml-language-server: $schema=https://www.schemastore.org/kustomization.json
+# OCI application entrypoint. Add only the small, OCI-specific app set here.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources: []
