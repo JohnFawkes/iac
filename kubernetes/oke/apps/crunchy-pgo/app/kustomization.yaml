@@ -3,5 +3,9 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - crunchy-pgo/ks.yaml
-  - prometheus/ks.yaml
+  - helmrelease.yaml
+  - external-secret.yaml
+  - source.yaml
+  - postgres.yaml
+  - pgadmin.yaml
+  - httproute.yaml
