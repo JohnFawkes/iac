@@ -8,8 +8,6 @@ metadata:
 spec:
   interval: 10m
   timeout: 10m
-  # Add the small set of OCI-specific app Kustomizations here as they are needed.
-  # Shared apps remain under kubernetes/apps.
   path: ./kubernetes/oke/apps
   sourceRef:
     kind: GitRepository
