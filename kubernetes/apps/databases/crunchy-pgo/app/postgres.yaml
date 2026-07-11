@@ -91,7 +91,7 @@ spec:
       global:
         repo1-block: "y"
         repo1-bundle: "y"
-        repo1-path: /pg-cluster
+        repo1-path: /pg-cluster-primary
         repo1-retention-full: "7"
         repo1-retention-full-type: time
         repo1-s3-uri-style: path
