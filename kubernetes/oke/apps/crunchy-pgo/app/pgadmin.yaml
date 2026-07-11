@@ -21,11 +21,8 @@ spec:
         storage: 1Gi
   serverGroups:
     - name: oke-cluster
-      postgresClusterSelector:
-        matchLabels:
-          postgres-operator.crunchydata.com/cluster: oke-cluster
+      postgresClusterName: oke-cluster
   config:
     settings:
       AUTHENTICATION_SOURCES: ["internal"]
   serviceName: oke-cluster-pgadmin
-  
