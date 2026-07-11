@@ -2,6 +2,7 @@ upstreams:
   groups:
     default:
       - 1.1.1.1
+      - 10.0.0.1
       - https://dns.google/dns-query
       - https://dns.nextdns.io
       - tcp-tls:dns.quad9.net
