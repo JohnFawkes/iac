@@ -6,10 +6,10 @@ metadata:
   name: flux-webhook
   namespace: flux-system
 spec:
-  hostnames: ["flux.mafyuh.dev"]
+  hostnames: ["flux.matt.fo"]
   parentRefs:
     - name: envoy-external
-      namespace: kube-system
+      namespace: networking
       sectionName: https
   rules:
     - backendRefs:

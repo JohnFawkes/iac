@@ -8,8 +8,7 @@ metadata:
 resources:
   - helmrelease.yaml
   - ../../../flux/cm.yaml
-  # - httproute.yaml
-  # - receiver.yaml
-  # - external-secret.yaml
+  - httproute.yaml
+  - receiver.yaml
+  - external-secret.yaml
   - source.yaml
-  # - monitoring.yaml
