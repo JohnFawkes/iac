@@ -12,6 +12,9 @@ upstreams:
 startVerifyUpstream: true
 connectIPVersion: v4
 
+caching:
+  cacheTimeNegative: -1
+
 customDNS:
   customTTL: 1h
   mapping:
