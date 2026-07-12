@@ -94,7 +94,7 @@ spec:
           enabled: true
           hostnames: ["{{ .Release.Name }}.matt.fo"]
           parentRefs:
-            - name: envoy-external
+            - name: envoy-internal
               namespace: networking
               sectionName: https
 
