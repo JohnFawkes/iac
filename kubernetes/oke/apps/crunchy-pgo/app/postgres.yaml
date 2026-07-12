@@ -59,6 +59,9 @@ spec:
   users:
     - name: mafyuh
       options: "SUPERUSER"
+    - name: vaultwarden
+      databases:
+        - vaultwarden
   backups:
     pgbackrest:
       configuration:
