@@ -66,6 +66,9 @@ spec:
     - name: gotify
       databases:
         - gotify
+    - name: n8n
+      databases:
+        - n8n
   backups:
     pgbackrest:
       configuration:
