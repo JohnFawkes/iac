@@ -5,7 +5,11 @@
       description: "Flux Group",
       groupName: "Flux",
       matchDatasources: ["docker", "github-releases"],
-      matchPackageNames: ["/flux-operator/", "/flux-instance/", "controlplaneio-fluxcd/distribution"],
+      matchPackageNames: [
+        "/flux-operator/",
+        "/flux-instance/",
+        "controlplaneio-fluxcd/distribution",
+      ],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
       },

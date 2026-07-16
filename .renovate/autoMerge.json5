@@ -7,7 +7,11 @@
       automerge: true,
       automergeType: "pr",
       matchUpdateTypes: ["digest", "patch"],
-      matchPackageNames: ["/home-operations/", "ghcr.io/n8n-io/n8n", "searxng/searxng"],
+      matchPackageNames: [
+        "/home-operations/",
+        "ghcr.io/n8n-io/n8n",
+        "searxng/searxng",
+      ],
       ignoreTests: false,
     },
     {

@@ -6,10 +6,8 @@ useDefault = true
 [allowlist]
 description = "Allowlist for false positives"
 paths = [
-  # External Secrets use 'key:' field for referencing secret keys, not actual secrets
-  '''kubernetes/apps/.*/external-secret\.yaml''',
-  '''kubernetes/components/.*/external-secret.*\.yaml''',
-  '''kubernetes/flux/.*/external-secret\.yaml''',
+  # ExternalSecrets use `key:` fields to reference secret-manager IDs, not actual secrets.
+  '''kubernetes/.*/external-secret\.yaml''',
   # Terraform files with placeholder/example values
   '''terraform/authentik/oauth_sources\.tf''',
   # Docker secret mappings - contains Bitwarden Secret Manager IDs only

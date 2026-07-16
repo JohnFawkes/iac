@@ -14,4 +14,3 @@ See the [terraform config](/terraform/oracle/oke/).
 While this environment is being tested, its directory structure mirrors the
 homelab layout. If OKE becomes a permanent part of the homelab, the overall
 `/kubernetes` structure will be reorganized.
-
