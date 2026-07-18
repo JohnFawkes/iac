@@ -10,5 +10,5 @@ spec:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
-    tag: 1.10.1
+    tag: 1.11.0
   url: oci://ghcr.io/n8n-io/n8n-helm-chart/n8n
