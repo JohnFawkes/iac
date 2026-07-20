@@ -23,18 +23,6 @@ services:
       - DATABASE_URL=$DATABASE_URL
     extra_hosts:
       - host.docker.internal:host-gateway
-  searxng:
-    image: searxng/searxng@sha256:b8ca38ba06eea544d7555e88321e212ddc0d5c3c7de055419cfb2e5c6bf30812
-    container_name: searxng
-    environment:
-      - PUID=${PUID:-1000}
-      - PGID=${PGID:-1000}
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - /docker/appdata/searxng:/etc/searxng
-    restart: unless-stopped
-    ports:
-      - "8081:8080"
 
   open-terminal:
     container_name: open-terminal
@@ -47,6 +35,39 @@ services:
     environment:
       - OPEN_TERMINAL_API_KEY=$OPEN_TERMINAL_API_KEY
       - OPEN_TERMINAL_MULTI_USER=true
+
+  litellm:
+    image: ghcr.io/berriai/litellm:v1.93.0
+    container_name: litellm
+    restart: unless-stopped
+    ports:
+      - "4000:4000"
+    environment:
+      DATABASE_URL: postgresql://llmproxy:${LITELLM_DB_PASSWORD}@10.0.0.210:5432/litellm
+      STORE_MODEL_IN_DB: "True"
+      LITELLM_MASTER_KEY: $LITELLM_MASTER_KEY
+      LITELLM_SALT_KEY: $LITELLM_SALT_KEY
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - python3 -c "import urllib.request; urllib.request.urlopen('http://localhost:4000/health/liveliness')"
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  searxng:
+    image: searxng/searxng@sha256:b8ca38ba06eea544d7555e88321e212ddc0d5c3c7de055419cfb2e5c6bf30812
+    container_name: searxng
+    environment:
+      - PUID=${PUID:-1000}
+      - PGID=${PGID:-1000}
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /docker/appdata/searxng:/etc/searxng
+    restart: unless-stopped
+    ports:
+      - "8081:8080"
 
 volumes:
   open-terminal:

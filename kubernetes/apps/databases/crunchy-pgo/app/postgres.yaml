@@ -4,6 +4,7 @@ apiVersion: postgres-operator.crunchydata.com/v1beta1
 kind: PostgresCluster
 metadata:
   name: pg-cluster
+  namespace: databases
 spec:
   postgresVersion: 18
   service:
@@ -81,6 +82,8 @@ spec:
       databases: ["netbox"]
     - name: umami
       databases: ["umami"]
+    - name: llmproxy
+      databases: ["litellm"]
     - name: homebox
       databases: ["homebox"]
   backups:

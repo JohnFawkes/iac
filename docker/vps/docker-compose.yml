@@ -1,22 +1,6 @@
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json
 services:
-  gotify:
-    image: ghcr.io/gotify/server:2.9.1
-    container_name: gotify
-    volumes:
-      - /docker/appdata/gotify:/app/data
-    restart: unless-stopped
-    environment:
-      - TZ=America/New_York
-      - GOTIFY_DEFAULTUSER_NAME=$GOTIFY_DEFAULTUSER_NAME
-      - GOTIFY_DEFAULTUSER_PASS=$GOTIFY_DEFAULTUSER_PASS
-    networks:
-      - racknerd
-    labels:
-      caddy: $GOTIFY_HOSTNAME
-      caddy.reverse_proxy: "{{upstreams 80}}"
-
   caddy:
     image: ghcr.io/homeall/caddy-reverse-proxy-cloudflare:2026.07.14
     container_name: caddy
@@ -82,64 +66,6 @@ services:
     restart: unless-stopped
     depends_on:
       - caddy
-
-  n8n:
-    image: ghcr.io/n8n-io/n8n:2.31.3
-    container_name: n8n
-    volumes:
-      - n8n_data:/home/node/.n8n
-    environment:
-      - GENERIC_TIMEZONE=America/New_York
-      - TZ=America/New_York
-      - WEBHOOK_URL=$WEBHOOK_URL
-      - N8N_ENCRYPTION_KEY=$N8N_ENCRYPTION_KEY
-      - DB_TYPE=postgresdb
-      - DB_POSTGRESDB_HOST=postgres
-      - DB_POSTGRESDB_PORT=5432
-      - DB_POSTGRESDB_DATABASE=n8n
-      - DB_POSTGRESDB_USER=vaultwarden
-      - DB_POSTGRESDB_PASSWORD=${POSTGRES_PASSWORD}
-      - DB_POSTGRESDB_SSL_ENABLED=false
-    restart: unless-stopped
-    networks:
-      - racknerd
-    depends_on:
-      postgres:
-        condition: service_healthy
-    labels:
-      caddy: $N8N_HOSTNAME
-      caddy.reverse_proxy: "{{upstreams 5678}}"
-
-  vaultwarden:
-    image: ghcr.io/dani-garcia/vaultwarden:1.36.0
-    container_name: vaultwarden
-    volumes:
-      - /home/mafyuh/vw-data/:/data
-    environment:
-      - DOMAIN=$VWDOMAIN
-      - SIGNUPS_ALLOWED=true
-      - SSO_ENABLED=true
-      - SSO_AUTHORITY=https://auth.mafyuh.io/application/o/vaultwarden/
-      - SSO_SCOPES="openid email profile offline_access"
-      - SSO_ONLY=true
-      - SSO_AUTH_ONLY_NOT_SESSION=true
-      - SSO_CLIENT_ID=e17019c548f26f15e483b74b2b0a95e8900a03bb
-      - SSO_CLIENT_SECRET=$SSO_CLIENT_SECRET
-      - SMTP_HOST=smtp.protonmail.ch
-      - SMTP_FROM=noreply@mafyuh.dev
-      - SMTP_FROM_NAME=Vaultwarden
-      - SMTP_USERNAME=noreply@mafyuh.dev
-      - SMTP_PASSWORD=$SMTP_PASSWORD
-      - SMTP_TIMEOUT=15
-      - SMTP_SECURITY=starttls
-      - SMTP_PORT=587
-      - DATABASE_URL=$DATABASE_URL
-    restart: unless-stopped
-    networks:
-      - racknerd
-    labels:
-      caddy: $VW_HOSTNAME
-      caddy.reverse_proxy: "{{upstreams 80}}"
 
   postgres:
     image: postgres:18.4
@@ -207,8 +133,6 @@ networks:
     external: true
 
 volumes:
-  linkstack:
-  n8n_data:
   postgres_data:
   databasus_data:
   forgejo_data:
