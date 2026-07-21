@@ -9,8 +9,10 @@ metadata:
 spec:
   gatewayClassName: envoy
   infrastructure:
-    annotations:
-      service.beta.kubernetes.io/oci-load-balancer-internal: "true"
+    parametersRef:
+      group: gateway.envoyproxy.io
+      kind: EnvoyProxy
+      name: envoy-external
   listeners:
     - name: http
       protocol: HTTP
@@ -29,6 +31,39 @@ spec:
           - kind: Secret
             name: matt-fo-production-tls
             namespace: networking
+---
+# yaml-language-server: $schema=https://schemas.mafyuh.dev/gateway.envoyproxy.io/envoyproxy_v1alpha1.json
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: EnvoyProxy
+metadata:
+  name: envoy-external
+spec:
+  logging:
+    level:
+      default: info
+  provider:
+    type: Kubernetes
+    kubernetes:
+      envoyDeployment:
+        replicas: 1
+        container:
+          imageRepository: mirror.gcr.io/envoyproxy/envoy
+          resources:
+            requests:
+              cpu: 15m
+              memory: 128Mi
+            limits:
+              cpu: 250m
+              memory: 256Mi
+      envoyService:
+        type: ClusterIP
+  shutdown:
+    drainTimeout: 180s
+  telemetry:
+    metrics:
+      prometheus:
+        compression:
+          type: Gzip
 ---
 # yaml-language-server: $schema=https://schemas.mafyuh.dev/gateway.envoyproxy.io/envoypatchpolicy_v1alpha1.json
 apiVersion: gateway.envoyproxy.io/v1alpha1
