@@ -60,9 +60,9 @@ spec:
         externalTrafficPolicy: Cluster
         annotations:
           service.beta.kubernetes.io/oci-load-balancer-internal: "true"
-          oci.oraclecloud.com/oci-load-balancer-shape: flexible
-          oci.oraclecloud.com/oci-load-balancer-shape-flex-min: "10"
-          oci.oraclecloud.com/oci-load-balancer-shape-flex-max: "10"
+          service.beta.kubernetes.io/oci-load-balancer-shape: flexible
+          service.beta.kubernetes.io/oci-load-balancer-shape-flex-min: "10"
+          service.beta.kubernetes.io/oci-load-balancer-shape-flex-max: "10"
   shutdown:
     drainTimeout: 180s
   telemetry:
